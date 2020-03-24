@@ -1,7 +1,7 @@
 var findme_map = L.map('findme-map')
-    .setView([37.7, -97.3], 3),
+    .setView([-26.8, -54.6], 7),
     osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    osmAttrib = 'Map data © OpenStreetMap contributors',
+    osmAttrib = 'Datos del Mapa © Colaboradores de OpenStreetMap',
     osm = L.tileLayer(osmUrl, {minZoom: 2, maxZoom: 18, attribution: osmAttrib}).addTo(findme_map),
     category_data = [];
 
@@ -15,7 +15,7 @@ if (location.hash) location.hash = '';
 
 var successString,loadingText;
 
-i18n.init({ fallbackLng: 'en-US', postAsync: 'false' }, function() {
+i18n.init({ fallbackLng: 'es-ES', postAsync: 'false' }, function() {
     $("body").i18n();
 
     successString=i18n.t('messages.success', { escapeInterpolation: false });
@@ -28,7 +28,7 @@ i18n.init({ fallbackLng: 'en-US', postAsync: 'false' }, function() {
 
     $.getJSON('./locales/' + detectedLang + '/categories.json', buildSelectControl).fail(function () {
         // 404? Fall back to en-US
-         $.getJSON('./locales/en-US/categories.json', buildSelectControl);
+         $.getJSON('./locales/es-ES/categories.json', buildSelectControl);
     });
 });
 
@@ -119,20 +119,20 @@ $("#collect-data-done").click(function() {
     location.hash = '#done';
 
     var note_body = !addr ? 
-        "onosm.org submitted note from a business:\n" +
-        "name: " + $("#name").val() + "\n" +
-        "phone: " + $("#phone").val() + "\n" +
-        "website: " + $("#website").val() + "\n" +
-        "twitter: " + $("#twitter").val() + "\n" +
-        "hours: " + $("#opening_hours").val() + "\n" +
-        "category: " + $("#category").val() + "\n" +
-        "address: " + $("#address").val() 
+        "onosm.org envió una nota de un negocio:\n" +
+        "name = " + $("#name").val() + "\n" +
+        "phone = " + $("#phone").val() + "\n" +
+        "website = " + $("#website").val() + "\n" +
+        "twitter = " + $("#twitter").val() + "\n" +
+        "opening_hours = " + $("#opening_hours").val() + "\n" +
+        "category = " + $("#category").val() + "\n" +
+        "addr:street = " + $("#address").val() 
         : 
-        "onosm.org submitted note for a home address:\n" + 
-        "number: " + $("#number").val() + "\n" +
-        "street: " + $("#street").val() + "\n" +
-        "city: " + $("#city").val() + "\n" +
-        "postal_code: " + $("#postal_code").val() + "\n",
+        "onosm.org envió una nota de una dirección de casa:\n" + 
+        "addr:housenumber = " + $("#number").val() + "\n" +
+        "addr:street = " + $("#street").val() + "\n" +
+        "addr:city = " + $("#city").val() + "\n" +
+        "addr:postcode = " + $("#postal_code").val() + "\n",
         latlon = findme_marker.getLatLng(),
         note_data = {
             lat: latlon.lat,
